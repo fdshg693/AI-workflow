@@ -6,4 +6,18 @@
 
 ## 中身
 
-（移行中。各ワークフローへの索引は移動後に足す）
+移行前は `tools/` にあった（AI-tools から履歴を移さずにコピー）。ディレクトリの構成と深さは `tools/` の時と同じ。
+
+### AI コーディングツールの CLI ラッパー
+
+- [claude-wrapper](claude-wrapper/AGENTS.md) — Claude Agent SDK のラッパーと、TODO 駆動の反復ランナー
+- [cline-wrapper](cline-wrapper/AGENTS.md)
+- [codex-wrapper](codex-wrapper/AGENTS.md)
+- [copilot-wrapper](copilot-wrapper/AGENTS.md)
+- [cursor-wrapper](cursor-wrapper/AGENTS.md)
+
+### エージェントの自動実行
+
+- [sandbox](sandbox/README.md) — GitHub ISSUE のラベルを検知し、Docker の使い捨てコンテナでエージェントを動かす
+- [schedule/ai-schedule](schedule/ai-schedule/README.md) — Windows タスクスケジューラにジョブを登録する
+- [schedule/issue-agent](schedule/issue-agent/README.md) — `ai-schedule` から定期実行し、git worktree 上でエージェントに ISSUE を処理させる

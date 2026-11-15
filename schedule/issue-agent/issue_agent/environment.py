@@ -4,7 +4,7 @@
 カレントディレクトリ探索ではなく固定パスにしているのは、
 `check.ps1`（`workflow/schedule/ai-schedule`経由、cwd=workflow/schedule/issue-agent）と`uv run python -m
 issue_agent.check`をリポジトリルート等どこから叩いても同じ`.env`を拾えるように
-するため（`tools/aim/aim_cli.py`と同じ方針）。既存の環境変数を`.env`の値で
+するため（`tools/llm/aim/aim_cli.py`と同じ方針）。既存の環境変数を`.env`の値で
 上書きしない（`override=False`）。
 """
 

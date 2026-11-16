@@ -32,7 +32,7 @@
 ## 実行結果メモ
 
 - 2026-07-18、`search-demo.yaml` のステップ1（「検索欄をクリックしてフォーカスする」）で、モデルが `click(ref="e218")` は呼んだが、同じレスポンス内で `finish_step` を呼ばなかった。`tool_choice="required"` かつプロンプトで「最後に必ずfinish_stepを呼ぶ」と明示していても、1レスポンスに複数tool callを確実に含めさせることはできなかった
-  - スクリプトは設計通り（[main.py](../scripts/vertical_slice/main.py)）`finish_step_missing` として failure note に記録し、その場で停止した（`tests/generated/search-demo.spec.failure-notes.json`）
-  - [detail/01-vertical-slice.md](detail/01-vertical-slice.md) のOpen Question「1レスポンス内で複数tool callを許可した場合…『1レスポンス=1操作』まで粒度を落とすべきかを判断する」が、まさにこのケースで顕在化した
+  - スクリプトは設計通り（[main.py](../../scripts/vertical_slice/main.py)）`finish_step_missing` として failure note に記録し、その場で停止した（`tests/generated/search-demo.spec.failure-notes.json`）
+  - 旧 HOW プラン（`detail/01-vertical-slice.md`。取り込み時に持ち込んでいない）のOpen Question「1レスポンス内で複数tool callを許可した場合…『1レスポンス=1操作』まで粒度を落とすべきかを判断する」が、まさにこのケースで顕在化した
   - 対応済み: (a)を採用。ステップ内を「モデル呼び出し→tool call実行→結果と最新snapshotを返す→再度モデル呼び出し」の多ターンループに変更し（`main.py`の`run_step`）、`finish_step`が単独で返るまで繰り返すようにした（上限`MAX_TURNS_PER_STEP=8`、超えたら`max_turns_exceeded`としてfailure note）。プロンプト（`prompts.py`）も「finish_stepは他の操作系ツールと同時に呼ばず、結果を確認してから単独で呼ぶ」よう明記
   - 再実行（2026-07-18）: ステップ1〜3は`click`→結果確認→`finish_step`のように2ターンで正常完了。ステップ4（「検索結果が表示されていることを確認する」）は`blocked`で停止 — Enter押下後、検索モーダルが一覧を出さずトップの候補ページへ直接遷移したため、モデルが「現在のsnapshotだけでは検索結果表示を確認できない」と正しく判断した。これはツール呼び出しの設計問題ではなく、シナリオ（`search-demo.yaml`）の想定と実際のサイト挙動のズレによるもの

@@ -1,0 +1,51 @@
+set windows-shell := ["powershell.exe", "-NoLogo", "-NoProfile", "-Command"]
+
+# Recipes run with this directory (workflow/playwright-app) as cwd: `python -m scripts...`
+# resolves the top-level `scripts` package from the cwd, and paths below are relative to it.
+# From the umbrella root: just --justfile workflow/playwright-app/justfile <recipe>
+
+# List available recipes
+default:
+    @just --list
+
+# Install Python (umbrella uv workspace) and Node (umbrella pnpm workspace) dependencies
+setup:
+    mise exec -- uv sync
+    mise exec -- pnpm install
+
+# Create .env from .env.example (no-op when it already exists)
+env:
+    if (-not (Test-Path .env)) { Copy-Item .env.example .env }
+
+# Install the browser binaries Playwright needs
+install-browsers:
+    mise exec -- pnpm exec playwright install
+
+# Start the session server (FastAPI)
+server host="127.0.0.1" port="8000":
+    mise exec -- uv run python -m scripts.server.main --host {{host}} --port {{port}}
+
+# Run one story end-to-end against the real AI API (billed: confirm before running)
+slice story session=file_stem(story) out=("tests/generated/" + file_stem(story) + ".spec.ts"):
+    mise exec -- uv run python -m scripts.vertical_slice.main --story {{story}} --session {{session}} --out {{out}} -v
+
+# Resume / branch from a recorded <out>.tasks.jsonl (billed: confirm before running)
+resume story tasks_log before session=file_stem(story) out=("tests/generated/" + file_stem(story) + ".spec.ts"):
+    mise exec -- uv run python -m scripts.vertical_slice.main --story {{story}} --session {{session}} --out {{out}} --resume-tasks-log {{tasks_log}} --resume-before-step {{before}} -v
+
+# Run the generated Playwright tests (extra args go to `playwright test`)
+test *args:
+    mise exec -- pnpm exec playwright test {{args}}
+
+# Summarize token usage / estimated cost (default target: tests/generated/)
+cost target="tests/generated/":
+    mise exec -- uv run python -m scripts.internal.cost_summary {{target}}
+
+# Write the run history as a self-contained HTML dashboard
+cost-html target="tests/generated/" html="cost_dashboard.html":
+    mise exec -- uv run python -m scripts.internal.cost_summary {{target}} --html {{html}}
+
+# Delete __pycache__ / playwright-report / test-results
+clean:
+    Get-ChildItem -Path . -Recurse -Directory -Filter __pycache__ | Where-Object { $_.FullName -notmatch 'node_modules' } | Remove-Item -Recurse -Force
+    Remove-Item -Recurse -Force -ErrorAction SilentlyContinue playwright-report, test-results

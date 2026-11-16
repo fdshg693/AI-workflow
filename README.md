@@ -21,3 +21,7 @@
 - [sandbox](sandbox/README.md) — GitHub ISSUE のラベルを検知し、Docker の使い捨てコンテナでエージェントを動かす
 - [schedule/ai-schedule](schedule/ai-schedule/README.md) — Windows タスクスケジューラにジョブを登録する
 - [schedule/issue-agent](schedule/issue-agent/README.md) — `ai-schedule` から定期実行し、git worktree 上でエージェントに ISSUE を処理させる
+
+### ブラウザテストの生成
+
+- [playwright-app](playwright-app/AGENTS.md) — 自然言語のテストストーリーを AI が `playwright-cli` で実行し、再実行可能な Playwright テスト（`.spec.ts`）を生成する（Playwright 研究用クローンから移設）

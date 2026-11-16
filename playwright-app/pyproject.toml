@@ -1,0 +1,17 @@
+[project]
+name = "playwright-app"
+version = "0.1.0"
+description = "Story YAML + snapshot -> AI -> playwright-cli -> generated .spec.ts, end-to-end without human mediation."
+requires-python = ">=3.11"
+dependencies = [
+    "openai>=1.60.0",
+    "python-dotenv>=1.0.1",
+    "pyyaml>=6.0.2",
+    "fastapi>=0.115.0",
+    "uvicorn>=0.32.0",
+]
+
+# Not an installable package: modules run as `python -m scripts...` with this
+# directory as the cwd (see justfile).
+[tool.uv]
+package = false

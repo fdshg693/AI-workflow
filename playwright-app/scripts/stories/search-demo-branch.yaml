@@ -1,0 +1,13 @@
+name: search-demo-branch
+intent: >
+  search-demo.yaml実行時の記録（.tasks.jsonl）から検索結果表示までのタスクを復元し、
+  そこから「検索結果の1件目をクリックして遷移先を確認する」という別の後続処理に
+  分岐できるか（Step5のresume/分岐実行）を確認する。
+# seed_url is unused for a resume run: replayed via `run-code`, not navigated to.
+# Kept only because Story requires it. See docs/roadmap/05-recording-and-resume.md
+seed_url: "https://playwright.dev"
+steps:
+  - id: 4
+    instruction: 検索結果の最初の項目をクリックする
+  - id: 5
+    instruction: 遷移先のページで、内容に関連しそうな見出しやテキストが表示されていることを確認する（画面操作は不要、確認のみ）

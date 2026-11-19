@@ -4,6 +4,10 @@
 
 `tools/` の配布 CLI と違い、ここに置くものは `registry/repo-tools.yaml`・`ai-tools.yaml` に登録せず、付属スキル（`_plugin`）も持たない。
 
+## 規約
+
+- [コーディング規約](docs/coding-conventions.md) — モデル・プロバイダは各ワークフローの `config.toml` で一元管理し、Git には `config.example.toml` だけを置く。ほか、上限値・権限・プロンプト・ログ・テストの書き方
+
 ## 中身
 
 移行前は `tools/` にあった（AI-tools から履歴を移さずにコピー）。ディレクトリの構成と深さは `tools/` の時と同じ。

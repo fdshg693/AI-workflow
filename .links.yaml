@@ -2,9 +2,30 @@
 # at the umbrella root; never committed). `path` is relative to this repository, `target` to the
 # umbrella (fdshg693/AI). In a standalone clone the targets are missing and sync skips them.
 links:
+  - path: plans
+    target: plans
+    why: share implementation plans across the umbrella and submodules
   - path: .claude/skills/committing
     target: maintenance/plugin/skills/committing
     why: commit procedure and lefthook wrapper (two-step submodule commit)
+  - path: .claude/skills/claude-agent-sdk
+    target: skills/plugins/cc-knowledge/skills/claude-agent-sdk
+    why: claude-wrapper, sandbox/orchestrator and schedule/issue-agent run agents through the Claude Agent SDK
+  - path: .claude/skills/claude-settings
+    target: skills/plugins/cc-knowledge/skills/claude-settings
+    why: settings.json the SDK runs load (sandbox/docker/claude-settings, permissions, sandboxing)
+  - path: .claude/skills/cline-sdk-docs
+    target: skills/plugins/ai-tools-knowledge/skills/cline-sdk-docs
+    why: cline-wrapper is built on @cline/sdk
+  - path: .claude/skills/codex-sdk-use
+    target: skills/plugins/ai-tools-knowledge/skills/codex-sdk-use
+    why: codex-wrapper is built on the Codex Python SDK (openai_codex)
+  - path: .claude/skills/github-copilot-sdk-docs
+    target: skills/plugins/ai-tools-knowledge/skills/github-copilot-sdk-docs
+    why: copilot-wrapper is built on @github/copilot-sdk
+  - path: .claude/skills/cursor-sdk-use
+    target: skills/plugins/ai-tools-knowledge/skills/cursor-sdk-use
+    why: cursor-wrapper is built on cursor-sdk
   - path: _umbrella/maintenance-docs
     target: maintenance/docs
     why: repository conventions (repo-layout.md decides what belongs in workflow/)

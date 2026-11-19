@@ -6,6 +6,10 @@
 .env
 *.pem
 
+# per-workflow settings (models, providers, limits); only config.example.toml is committed.
+# See docs/coding-conventions.md
+config.toml
+
 # dependencies / build
 __pycache__/
 *.py[cod]

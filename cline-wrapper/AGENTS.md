@@ -72,4 +72,3 @@ npm test --prefix workflow\cline-wrapper
 - `skills\plugins\ai-tools-knowledge\skills\cline-sdk-docs\`
   - Cline SDK のドキュメントを Markdown 形式でまとめたものです。
 - [NEXT.md](NEXT.md) — 今後の機能追加アイデア。
-- [REFACTOR.md](REFACTOR.md) — リファクタ候補。

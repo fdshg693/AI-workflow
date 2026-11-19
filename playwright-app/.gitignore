@@ -1,0 +1,23 @@
+# local config (the committed sample is .env.example)
+.env
+
+# Python / Node
+__pycache__/
+*.pyc
+.venv/
+node_modules/
+
+# Playwright / playwright-cli runtime output
+.playwright/
+.playwright-cli/
+test-results/
+playwright-report/
+
+# generated tests, run history, recordings, failure notes
+tests/generated/*
+!tests/generated/.gitkeep
+
+# run logs and cost dashboards
+logs/
+*.logs
+cost_dashboard.html
